@@ -79,8 +79,9 @@ export class DashboardComponent implements OnInit {
             this.profit = data;
         });
 
+        /* ----------==========     Daily Sales Chart initialization   ==========---------- */
         this.gatewayService.getMonthlySales().subscribe(monthlySales => {
-            const labels = monthlySales.map(sale => sale.month.charAt(0));
+            const labels = monthlySales.map(sale => sale.month.substring(0, 3));
             const series = [monthlySales.map(sale => sale.count)];
 
             const dataMonthlySalesChart: any = {
@@ -102,85 +103,60 @@ export class DashboardComponent implements OnInit {
             this.startAnimationForLineChart(monthlySalesChart);
         });
 
-
-        /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
-
-        const dataDailySalesChart: any = {
-            labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-            series: [
-                [12, 17, 7, 17, 23, 18, 38]
-            ]
-        };
-
-        const optionsDailySalesChart: any = {
-            lineSmooth: Chartist.Interpolation.cardinal({
-                tension: 0
-            }),
-            low: 0,
-            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {top: 0, right: 0, bottom: 0, left: 0},
-        }
-
-        var dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
-
-        this.startAnimationForLineChart(dailySalesChart);
-
-
-        /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-        const dataCompletedTasksChart: any = {
-            labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-            series: [
-                [230, 750, 450, 300, 280, 240, 200, 190]
-            ]
-        };
-
-        const optionsCompletedTasksChart: any = {
-            lineSmooth: Chartist.Interpolation.cardinal({
-                tension: 0
-            }),
-            low: 0,
-            high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-            chartPadding: {top: 0, right: 0, bottom: 0, left: 0}
-        }
-
-        var completedTasksChart = new Chartist.Line('#completedTasksChart', dataCompletedTasksChart, optionsCompletedTasksChart);
-
-        // start animation for the Completed Tasks Chart - Line Chart
-        this.startAnimationForLineChart(completedTasksChart);
-
-
         /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
+        this.gatewayService.getMonthlyEarning().subscribe(monthlyEarning => {
+            const labels = monthlyEarning.map(earning => earning.month.substring(0, 3));
+            const series = [monthlyEarning.map(earning => earning.count)];
 
-        var datawebsiteViewsChart = {
-            labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-            series: [
-                [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+            const dataMonthlyEarningChart: any = {
+                labels: labels,
+                series: series
+            };
 
-            ]
-        };
-        var optionswebsiteViewsChart = {
-            axisX: {
-                showGrid: false
-            },
-            low: 0,
-            high: 1000,
-            chartPadding: {top: 0, right: 5, bottom: 0, left: 0}
-        };
-        var responsiveOptions: any[] = [
-            ['screen and (max-width: 640px)', {
-                seriesBarDistance: 5,
+            const optionsMonthlyEarningChart: any = {
                 axisX: {
-                    labelInterpolationFnc: function (value) {
-                        return value[0];
-                    }
-                }
-            }]
-        ];
-        var websiteViewsChart = new Chartist.Bar('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+                    showGrid: false
+                },
+                low: 0,
+                high: Math.max(...series[0]) + 100,
+                chartPadding: {top: 0, right: 5, bottom: 0, left: 0}
+            };
 
-        //start animation for the Emails Subscription Chart
-        this.startAnimationForBarChart(websiteViewsChart);
+            const responsiveOptions: any[] = [
+                ['screen and (max-width: 640px)', {
+                    seriesBarDistance: 5,
+                    axisX: {
+                        labelInterpolationFnc: function (value) {
+                            return value[0];
+                        }
+                    }
+                }]
+            ];
+            var monthlyEarningChart = new Chartist.Bar('#earningViewChart', dataMonthlyEarningChart, optionsMonthlyEarningChart, responsiveOptions);
+            this.startAnimationForBarChart(monthlyEarningChart);
+        })
+        /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
+        this.gatewayService.getMonthlyExpense().subscribe(monthlyExpense => {
+            const labels = monthlyExpense.map(earning => earning.month.substring(0, 3));
+            const series = [monthlyExpense.map(earning => earning.count)];
+
+            const dataMonthlyExpenseChart: any = {
+                labels: labels,
+                series: series
+            };
+
+            const optionsMonthlyExpenseChart: any = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                }),
+                low: 0,
+                high: Math.max(...series[0]) + 100,
+                chartPadding: {top: 0, right: 0, bottom: 0, left: 0}
+            }
+
+            var monthlyExpenseChart = new Chartist.Line('#completedTasksChart', dataMonthlyExpenseChart, optionsMonthlyExpenseChart);
+            this.startAnimationForLineChart(monthlyExpenseChart);
+        })
     }
 
     getFormattedSpending(): string {
