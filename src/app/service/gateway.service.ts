@@ -15,4 +15,8 @@ export class GatewayService {
   getProfit(): Observable<Profit> {
     return this.http.get<Profit>(`${this.host}/profit`)
   }
+
+  getMonthlySales(): Observable<{ month: string, count: number }[]> {
+    return this.http.get<{ month: string, count: number }[]>(`${this.host}/item/sales/monthly`);
+  }
 }

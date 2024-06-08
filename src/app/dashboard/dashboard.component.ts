@@ -79,6 +79,30 @@ export class DashboardComponent implements OnInit {
             this.profit = data;
         });
 
+        this.gatewayService.getMonthlySales().subscribe(monthlySales => {
+            const labels = monthlySales.map(sale => sale.month.charAt(0));
+            const series = [monthlySales.map(sale => sale.count)];
+
+            const dataMonthlySalesChart: any = {
+                labels: labels,
+                series: series
+            };
+
+            const optionsMonthlySalesChart: any = {
+                lineSmooth: Chartist.Interpolation.cardinal({
+                    tension: 0
+                }),
+                low: 0,
+                high: Math.max(...series[0]) + 1,
+                chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+            };
+
+            var monthlySalesChart = new Chartist.Line('#monthlySalesChart', dataMonthlySalesChart, optionsMonthlySalesChart);
+
+            this.startAnimationForLineChart(monthlySalesChart);
+        });
+
+
         /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
 
         const dataDailySalesChart: any = {
