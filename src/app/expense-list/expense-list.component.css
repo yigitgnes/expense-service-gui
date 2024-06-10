@@ -1,0 +1,19 @@
+.custom-button {
+    background-color: #0056b3;
+    color: white;
+    border-color: #004494;
+}
+
+.custom-button:hover {
+    background-color: #004494;
+    border-color: #003374;
+}
+.table .text-middle {
+    text-align: center;
+}
+.table .date-middle {
+    text-align: center;
+}
+.btn-space {
+    margin-right: 10px;
+}

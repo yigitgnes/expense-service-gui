@@ -150,7 +150,7 @@ export class DashboardComponent implements OnInit {
                     tension: 0
                 }),
                 low: 0,
-                high: Math.max(...series[0]) + 100,
+                high: Math.max(...series[0]) + 50,
                 chartPadding: {top: 0, right: 0, bottom: 0, left: 0}
             }
 

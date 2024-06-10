@@ -22,7 +22,7 @@ import {DecimalPipe} from "@angular/common";
   ],
   declarations: [
     AppComponent,
-    AdminLayoutComponent,
+    AdminLayoutComponent
 
   ],
   providers: [
