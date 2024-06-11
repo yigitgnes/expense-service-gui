@@ -38,6 +38,9 @@ export class GatewayService {
     return this.http.get<PagedResult<Expense>>(`${this.host}/expense`, { params });
   }
 
+  createExpense(espense: Expense): Observable<Expense> {
+    return this.http.post<Expense>(`${this.host}/expense`, espense);
+  }
   updateExpense(expense: Expense): Observable<Expense> {
     return this.http.put<Expense>(`${this.host}/expense`, expense);
   }

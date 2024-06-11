@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import {GatewayService} from "./service/gateway.service";
 import {DecimalPipe} from "@angular/common";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import {DecimalPipe} from "@angular/common";
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    NgbModule,
   ],
   declarations: [
     AppComponent,

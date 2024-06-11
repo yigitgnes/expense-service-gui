@@ -3,9 +3,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Expense Table</h4>
-                        <p class="card-category"> Here is the expense you spent for the</p>
+                    <div class="card-header d-flex justify-content-between align-items-center card-header-background">
+                        <div>
+                            <h4 class="card-title">Expense Table</h4>
+                            <p class="card-category">Here is the expense you spent for the</p>
+                        </div>
+                        <button class="btn btn-success" (click)="openCreateModal()">Create New Expense</button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

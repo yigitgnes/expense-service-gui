@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>{{ data.id ? 'Edit Expense' : 'Create New Expense' }}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="editForm">
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="editForm.controls['name'].hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" required>
+            <mat-error *ngIf="editForm.controls['description'].hasError('required')">Description is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Date</mat-label>
+            <input matInput type="date" formControlName="expenseDate" required>
+            <mat-error *ngIf="editForm.controls['expenseDate'].hasError('required')">Date is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Price</mat-label>
+            <input matInput type="number" formControlName="price" required>
+            <mat-error *ngIf="editForm.controls['price'].hasError('required')">Price is required</mat-error>
+            <mat-error *ngIf="editForm.controls['price'].hasError('min')">Price must be positive</mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button color="primary" (click)="onEdit()" [disabled]="!editForm.valid">Confirm</button>
+</div>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {GatewayService, PagedResult} from "../service/gateway.service";
 import {Expense} from "../model/Expense";
 import {MatDialog} from "@angular/material/dialog";
-import {EditExpenseDialogComponent} from "./edit-expense-dialog/edit-expense-dialog.component";
+import {ExpenseDialogComponent} from "./expense-dialog/expense-dialog.component";
 import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
 
 @Component({
@@ -37,9 +37,39 @@ export class ExpenseListComponent implements OnInit {
     this.pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   }
 
+  openCreateModal() {
+    const dialogRef = this.dialog.open(ExpenseDialogComponent, {
+      width: '900px',
+      data: { expense: new Expense() }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.confirmCreate(result);
+      }
+    });
+  }
+
+  confirmCreate(newExpense: Expense) {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.createExpense(newExpense);
+      }
+    });
+  }
+
+  createExpense(newExpense: Expense) {
+    this.gatewayService.createExpense(newExpense).subscribe(createdExpense => {
+      this.expenses.push(createdExpense);
+      this.loadExpenses();
+    });
+  }
+
   openEditModal(expense: Expense) {
-    const dialogRef = this.dialog.open(EditExpenseDialogComponent, {
-      width: '500px',
+    const dialogRef = this.dialog.open(ExpenseDialogComponent, {
+      width: '900px',
       data: { ...expense }
     });
 
