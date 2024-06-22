@@ -3,6 +3,9 @@ import * as Chartist from 'chartist';
 import {GatewayService} from "../service/gateway.service";
 import {Profit} from "../model/Profit";
 import {DecimalPipe} from "@angular/common";
+import {Task} from "../model/Task";
+import {MatDialog} from "@angular/material/dialog";
+import {TaskDialogComponent} from "./task-dialog/task-dialog.component";
 
 @Component({
     selector: 'app-dashboard',
@@ -12,7 +15,15 @@ import {DecimalPipe} from "@angular/common";
 export class DashboardComponent implements OnInit {
 
     profit: Profit;
-    constructor(private gatewayService: GatewayService, private decimalPipe: DecimalPipe) {
+    tasks: Task[] = [];
+    selectedTab: string = '';
+    tabs = [
+        { label: "All Tasks", category: '', icon: 'task'},
+        { label: 'Marketing', category: 'marketing', icon: 'campaign' },
+        { label: 'Inventory', category: 'inventory-management', icon: 'inventory' },
+        { label: 'Customer', category: 'customer-engagement', icon: 'support_agent' }
+    ];
+    constructor(private gatewayService: GatewayService, private decimalPipe: DecimalPipe, public dialog: MatDialog) {
     }
 
     startAnimationForLineChart(chart) {
@@ -157,6 +168,8 @@ export class DashboardComponent implements OnInit {
             var monthlyExpenseChart = new Chartist.Line('#completedTasksChart', dataMonthlyExpenseChart, optionsMonthlyExpenseChart);
             this.startAnimationForLineChart(monthlyExpenseChart);
         })
+
+        this.loadTasks();
     }
 
     getFormattedSpending(): string {
@@ -171,5 +184,58 @@ export class DashboardComponent implements OnInit {
     getFormattedProfit(): string {
         return this.decimalPipe.transform(this.profit.profit, '1.2-2');
     }
+
+
+    loadTasks(category?: string) {
+        this.gatewayService.getAllTasks(category).subscribe((tasks: Task[]) => {
+            this.tasks = tasks;
+        });
+    }
+
+    onTabChange(category: string): void {
+        this.selectedTab = category;
+        this.loadTasks(category);
+    }
+
+    toggleCompleted(task: Task) {
+        task.completed = !task.completed;
+        this.gatewayService.updateTask(task.id!, task).subscribe();
+    }
+
+    deleteTask(id: number) {
+        this.gatewayService.deleteTask(id).subscribe(() => {
+            this.loadTasks();
+        });
+    }
+    openEditModal(task: Task) {
+        const dialogRef = this.dialog.open(TaskDialogComponent, {
+            width: '900px',
+            data: { ...task }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.gatewayService.updateTask(task.id, task).subscribe(() => {
+                    this.tasks[task.id] = task;
+                });
+            }
+        });
+    }
+    openCreateModal() {
+        const dialogRef = this.dialog.open(TaskDialogComponent, {
+            width: '900px',
+            data: { task: new Task()}
+        });
+
+        dialogRef.afterClosed().subscribe(result =>{
+            if (result) {
+                this.gatewayService.createTask(result).subscribe(createdTask => {
+                    this.tasks.push(createdTask);
+                    this.loadTasks(createdTask.category);
+                })
+            }
+        });
+    }
+
 
 }

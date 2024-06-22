@@ -18,6 +18,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDialogModule} from "@angular/material/dialog";
 import {ExpenseDialogComponent} from "../../expense-list/expense-dialog/expense-dialog.component";
 import {ConfirmDialogComponent} from "../../expense-list/confirm-dialog/confirm-dialog.component";
+import {TaskDialogComponent} from "../../dashboard/task-dialog/task-dialog.component";
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import {ConfirmDialogComponent} from "../../expense-list/confirm-dialog/confirm-
     MapsComponent,
     NotificationsComponent,
     ExpenseDialogComponent,
-    ConfirmDialogComponent,
+    TaskDialogComponent,
+    ConfirmDialogComponent
   ]
 })
 

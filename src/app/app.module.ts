@@ -7,8 +7,8 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import {GatewayService} from "./service/gateway.service";
-import {DecimalPipe} from "@angular/common";
+import { GatewayService } from "./service/gateway.service";
+import { DecimalPipe } from "@angular/common";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
@@ -25,7 +25,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   declarations: [
     AppComponent,
     AdminLayoutComponent
-
   ],
   providers: [
     GatewayService,
