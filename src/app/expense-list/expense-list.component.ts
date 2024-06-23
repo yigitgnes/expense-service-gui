@@ -3,7 +3,7 @@ import {GatewayService, PagedResult} from "../service/gateway.service";
 import {Expense} from "../model/Expense";
 import {MatDialog} from "@angular/material/dialog";
 import {ExpenseDialogComponent} from "./expense-dialog/expense-dialog.component";
-import {ConfirmDialogComponent} from "./confirm-dialog/confirm-dialog.component";
+import {ConfirmDialogComponent} from "../confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-expense-list',

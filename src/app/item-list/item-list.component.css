@@ -1,0 +1,52 @@
+.custom-button {
+  background-color: #0056b3;
+  color: white;
+  border-color: #004494;
+}
+
+.custom-button:hover {
+  background-color: #004494;
+  border-color: #003374;
+}
+.table .text-middle {
+  text-align: center;
+}
+.table .date-middle {
+  text-align: center;
+}
+.btn-space {
+  margin-right: 10px;
+}
+.card-header.card-header-background {
+  position: relative;
+  background-image: url('assets/img/expense-background.jpg');
+  background-size: cover;
+  background-position: center center;
+  color: white;
+}
+
+.card-header.card-header-background::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed for fading effect */
+  z-index: 1;
+}
+
+.card-header.card-header-background * {
+  position: relative;
+  z-index: 2;
+}
+
+.card-header.card-header-background .btn {
+  background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent background for the button */
+  color: white;
+}
+
+.card-header.card-header-background .btn:hover {
+  background-color: rgba(255, 255, 255, 0.5); /* Darker on hover */
+}
+

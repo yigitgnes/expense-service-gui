@@ -1,0 +1,47 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center card-header-background">
+                        <div>
+                            <h4 class="card-title">Item Table</h4>
+                            <p class="card-category">Here is the items you have bought/sold</p>
+                        </div>
+                        <button class="btn btn-success" (click)="openCreateModal()">Create New Item</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                <th>Name</th>
+                                <th class="date-middle">Purchase Price</th>
+                                <th class="date-middle">Purchase Date</th>
+                                <th class="date-middle">Sale Price</th>
+                                <th class="date-middle">Sale Date</th></thead>
+                                <tbody>
+                                <tr *ngFor="let item of items">
+                                    <td>{{ item.name }}</td>
+                                    <td class="date-middle">{{ item.sale.purchasePrice }} PLN</td>
+                                    <td class="date-middle">{{ item.sale.purchaseDate | date: 'dd.MM.yyyy' }}</td>
+                                    <td class="date-middle">{{ item.sale.salePrice }} PLN</td>
+                                    <td class="date-middle">{{ item.sale.saleDate | date: 'dd.MM.yyyy' }}</td>
+                                    <td class="text-middle">
+                                        <button class="btn custom-button btn-sm" (click)="openEditModal(item)">Edit</button>
+                                        <button class="btn btn-danger btn-sm" (click)="deleteItem(item.id)">Delete</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button class="btn btn-dark-blue btn-sm" (click)="onPageChange(page - 1)" [disabled]="page === 1">Previous</button>
+                            <button class="btn btn-dark-blue btn-sm" *ngFor="let p of pages" (click)="onPageChange(p)" [class.active]="p === page">{{ p }}</button>
+                            <button class="btn btn-dark-blue btn-sm" (click)="onPageChange(page + 1)" [disabled]="page * size >= totalCount">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

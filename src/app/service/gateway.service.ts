@@ -5,6 +5,7 @@ import {Profit} from "../model/Profit";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Expense} from "../model/Expense";
 import {Task} from "../model/Task";
+import {Item} from "../model/Item";
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class GatewayService {
   constructor(private http: HttpClient) { }
 
   //APIs to full-fill charts
+
   getProfit(): Observable<Profit> {
     return this.http.get<Profit>(`${this.host}/profit`)
   }
@@ -29,6 +31,7 @@ export class GatewayService {
   }
 
   //EXPENSE APIS
+
   getAllExpensenses(page: number, size: number): Observable<PagedResult<Expense>> {
     const params = new HttpParams()
         .set('page', page.toString())
@@ -44,6 +47,7 @@ export class GatewayService {
   deleteExpenseById(expenseId: number): Observable<void> {
     return this.http.delete<void>(`${this.host}/expense/${expenseId}`);
   }
+
   // TASK APIS
   getAllTasks(category?: string): Observable<Task[]> {
     let params = new HttpParams();
@@ -67,6 +71,24 @@ export class GatewayService {
 
   deleteTask(id: number): Observable<void> {
     return this.http.delete<void>(`${this.host}/tasks/${id}`);
+  }
+
+  // ITEMS APIS
+
+  getAllItems(page: number, size: number): Observable<PagedResult<Item>> {
+    const params = new HttpParams()
+        .set('page', page.toString())
+        .set('size', size.toString());
+    return this.http.get<PagedResult<Item>>(`${this.host}/item`, { params });
+  }
+  createItem(item: Item): Observable<Item> {
+    return this.http.post<Item>(`${this.host}/item`, item);
+  }
+  updateItem(item: Item): Observable<Item> {
+    return this.http.put<Item>(`${this.host}/item`, item);
+  }
+  deleteItemById(itemId: number): Observable<void> {
+    return this.http.delete<void>(`${this.host}/item/${itemId}`);
   }
 }
 

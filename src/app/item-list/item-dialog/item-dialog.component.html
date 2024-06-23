@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>{{ data.id ? 'Edit Item' : 'Create New Item' }}</h1>
+<div mat-dialog-content>
+    <form [formGroup]="editForm">
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" required>
+            <mat-error *ngIf="editForm.controls['name'].hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Purchase Price</mat-label>
+            <input matInput type="number" formControlName="purchasePrice" required>
+            <mat-error *ngIf="editForm.controls['purchasePrice'].hasError('required')">Price is required</mat-error>
+            <mat-error *ngIf="editForm.controls['purchasePrice'].hasError('min')">Price must be positive</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Purchase Date</mat-label>
+            <input matInput type="date" formControlName="purchaseDate" required>
+            <mat-error *ngIf="editForm.controls['purchaseDate'].hasError('required')">Date is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Sale Price</mat-label>
+            <input matInput type="number" formControlName="salePrice">
+            <mat-error *ngIf="editForm.controls['salePrice'].hasError('min')">Price must be positive</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Sale Date</mat-label>
+            <input matInput type="date" formControlName="saleDate">
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button color="primary" (click)="onEdit()" [disabled]="!editForm.valid">Confirm</button>
+</div>
